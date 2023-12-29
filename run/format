@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+black src && isort src && mypy src && flake8 --max-line-length=100
