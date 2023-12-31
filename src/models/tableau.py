@@ -99,4 +99,5 @@ class Tableau:
 
     @property
     def can_go(self) -> bool:
+        # this is oversimplified, I'm not sure how safety cards factor in
         return bool(self.top_battle_card and self.top_battle_card.name == CardName.go)
