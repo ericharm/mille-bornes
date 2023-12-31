@@ -1,7 +1,9 @@
-from enum import Enum
-from typing import Optional, Union
-from src.defs.card_names import CardName
+from __future__ import annotations
 
+from enum import Enum
+from typing import NoReturn, Optional, Union, cast
+
+from src.defs.card_names import CardName
 from src.defs.game import Condition
 
 
@@ -19,14 +21,18 @@ class Card:
     description: Optional[str] = None
 
 
-class ConditionCard:
+class ConditionCard(Card):
     name: CardName
     card_type: CardType
     value: set[Condition]
     description: Optional[str] = None
 
+    @property
+    def condition(self) -> Condition:
+        return cast(Condition, list(self.value)[0])
 
-class DistanceCard:
+
+class DistanceCard(Card):
     name: CardName
     card_type: CardType = CardType.distance
     value: int = 0
@@ -49,3 +55,9 @@ class SafetyCard(ConditionCard):
     name: CardName
     card_type: CardType = CardType.safety
     description: Optional[str] = None
+
+    @property
+    def condition(self) -> NoReturn:
+        raise Exception(
+            "Unsafe call to 'condition' on SafetyCard: some safety cards have multiple conditions"
+        )

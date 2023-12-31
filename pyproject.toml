@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "src"
+name = "milles_bornes"
 version = "0.1.0"
 description = ""
 authors = ["Eric Harm <ericharm@gmail.com>"]

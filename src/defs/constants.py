@@ -1,4 +1,5 @@
 from typing import Type
+
 from src.defs import cards
 
 SPEED_LIMIT = 50

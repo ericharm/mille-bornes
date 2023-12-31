@@ -1,20 +1,17 @@
+from dataclasses import dataclass, field
 from typing import cast
-from defs.card_types import Card
-from domain.models.player import Player
-from src.defs.game import GameBase
+
+from src.defs.card_types import Card
+from src.models.player import Player
 
 
-class Game(GameBase):
-    # draw_pile: list[Card]
-    # discard_pile: list[Card]
-    # players: list[Player]
-    # current_player_index: int = 0
-    # turn = 0
-
-    def __init__(
-        self, draw_pile: list[Card], discard_pile: list[Card], players: list[Player]
-    ) -> None:
-        super().__init__(draw_pile=draw_pile, discard_pile=discard_pile, players=players)
+@dataclass
+class Game:
+    players: list[Player]
+    draw_pile: list[Card]
+    discard_pile: list[Card] = field(default_factory=lambda: [])
+    current_player_index: int = 0
+    turn = 0
 
     @property
     def player_count(self) -> int:

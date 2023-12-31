@@ -1,20 +1,6 @@
-from defs.constants import HAND_SIZE, TOTAL_CARD_COUNT
-from defs.game import Condition
-from domain.models.game import Game
-from domain.models.player import Player
-from src.domain.player import select_playable_card
-from src.domain.cards import card_is_played_to_own_tableau, create_deck
-from src.domain.models.human_player import HumanPlayer
-
-
-def create_game() -> Game:
-    deck = create_deck()
-    player_1 = HumanPlayer()
-    return Game(
-        # players=[player_1],
-        # draw_pile=deck,
-        # discard_pile=[],
-    )
+from src.defs.constants import HAND_SIZE, TOTAL_CARD_COUNT
+from src.domain.cards import card_target_is_self
+from src.models.game import Game
 
 
 def deal_cards(game: Game) -> Game:
@@ -34,11 +20,11 @@ def play_game_turn(game: Game) -> Game:
 
     game.current_player.draw_card(game.draw_pile)
 
-    card = select_playable_card(player=game.current_player)
+    card = game.current_player.select_playable_card()
 
     if card:
         # TODO select playable card maybe should return the target of hazard cards
-        target = game.current_player if card_is_played_to_own_tableau(card) else game.next_player
+        target = game.current_player if card_target_is_self(card) else game.next_player
         game.current_player.play_card(card, target)
 
     game.current_player.discard_card(game.discard_pile)
@@ -46,10 +32,3 @@ def play_game_turn(game: Game) -> Game:
     game.current_player_index = game.next_player_index
 
     return game
-
-
-def get_player_suscetibilities(players: list[Player]) -> dict[Player, list[Condition]]:
-    suscetibilities = {}
-    for player in players:
-        suscetibilities[player] = player.susceptibilities
-    return suscetibilities

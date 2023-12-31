@@ -1,65 +1,59 @@
-from typing import cast
-from src.defs.cards.hazards import HazardCard
-from src.defs.cards.remedies import RemedyCard
-from src.domain.cards import card_meets_condition, get_top_card, remedy_card_cures_hazard_card
-from src.defs.cards.cards import Card, CardType, Concern
-from src.defs.game import Tableau
+from collections.abc import Callable
+
+from src.defs.card_names import CardName
+from src.defs.card_types import Card, CardType, DistanceCard, HazardCard, RemedyCard
+from src.defs.game import Condition
+from src.models.tableau import Tableau
+
+
+def _add_hazard_to_tableau(tableau: Tableau, hazard_card: HazardCard) -> None:
+    if hazard_card.condition in tableau.immunities:
+        raise Exception("Player has immunity against this hazard")
+
+    if hazard_card.condition == Condition.speed_limit:
+        tableau.speed_cards.append(hazard_card)
+        return
+    tableau.battle_cards.append(hazard_card)
+
+
+def _add_remedy_to_tableau(tableau: Tableau, remedy_card: RemedyCard) -> None:
+    if remedy_card.name == CardName.go:
+        if not tableau.can_play_go_card:
+            raise Exception("Player cannot play Go card")
+        tableau.battle_cards.append(remedy_card)
+        return
+
+    if remedy_card.condition not in tableau.active_conditions:
+        raise Exception("Player does not have this condition")
+
+    if remedy_card.name == CardName.end_of_limit:
+        tableau.speed_cards.append(remedy_card)
+        return
+
+    # I actually think this condition is not impossible:
+    # top_battle_card = tableau.top_battle_card
+    # if not remedy_card_cures_hazard_card(remedy_card, cast(HazardCard, top_battle_card)):
+    #     raise Exception("This remedy does not reconcile this hazard")
+
+    tableau.battle_cards.append(remedy_card)
+
+
+def _add_distance_card_to_tableau(tableau: Tableau, distance_card: DistanceCard) -> None:
+    if not tableau.can_go:
+        raise Exception("Player cannot play distance card when Go is not showing")
+    if tableau.speed_limit and distance_card.value > tableau.speed_limit:
+        raise Exception("Cannot play distance card beyond speed limit")
+    tableau.distance_cards.append(distance_card)
+
+
+CARD_TYPES_TO_TABLEAU_ADDER_FNS: dict[CardType, Callable] = {
+    CardType.distance: _add_distance_card_to_tableau,
+    CardType.safety: lambda tableau, card: tableau.safety_cards.append(card),
+    CardType.hazard: _add_hazard_to_tableau,
+    CardType.remedy: _add_remedy_to_tableau,
+}
 
 
 def add_card_to_tableau(tableau: Tableau, card: Card) -> None:
-    if card.card_type == CardType.safety:
-        tableau.safety_cards.append(card)
-    if card.card_type == CardType.remedy:
-        assert isinstance(card, RemedyCard)
-        add_remedy_to_tableu(tableau, card)
-    if card.card_type == CardType.hazard:
-        assert isinstance(card, HazardCard)
-        add_hazard_to_tableu(tableau, card)
-    if card.card_type == CardType.distance:
-        tableau.distance_cards.append(card)
-
-
-def add_hazard_to_tableu(tableau: Tableau, hazard: HazardCard) -> None:
-    card = cast(Card, hazard)
-    if hazard.value == Concern.speed:
-        top_speed_card = get_top_card(tableau.speed_cards)
-
-        if top_speed_card and card_meets_condition(
-            top_speed_card,
-            lambda card: card.card_type == CardType.hazard and card.value == Concern.speed,
-        ):
-            raise Exception("Cannot add a second speed limit card to the speed stack")
-
-        add_card_to_tableau(tableau, card)
-
-    else:
-        top_battle_card = get_top_card(tableau.battle_cards)
-        if top_battle_card and card_meets_condition(
-            card=top_battle_card, condition=lambda card: card.card_type == CardType.hazard
-        ):
-            raise Exception("Cannot add a second hazard card to the battle stack")
-
-        add_card_to_tableau(tableau, card)
-
-
-def add_remedy_to_tableu(tableau: Tableau, remedy: RemedyCard) -> None:
-    card = cast(Card, remedy)
-    if remedy.value == Concern.speed:
-        top_speed_card = get_top_card(tableau.speed_cards)
-        if top_speed_card and not card_meets_condition(
-            card=top_speed_card,
-            condition=lambda card: card.card_type == CardType.hazard
-            and Card.value == Concern.speed,
-        ):
-            raise Exception("No speed limit to remove")
-
-        add_card_to_tableau(tableau, card)
-    else:
-        top_battle_card = get_top_card(tableau.battle_cards)
-        if top_battle_card and not card_meets_condition(
-            card=top_battle_card,
-            condition=lambda card: remedy_card_cures_hazard_card(remedy, card),
-        ):
-            raise Exception("No hazard to remove")
-
-        add_card_to_tableau(tableau, card)
+    adder_fn = CARD_TYPES_TO_TABLEAU_ADDER_FNS[card.card_type]
+    adder_fn(tableau, card)

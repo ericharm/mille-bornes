@@ -1,6 +1,6 @@
 from src.defs.card_names import CardName
-from src.defs.game import Condition
 from src.defs.card_types import DistanceCard, HazardCard, RemedyCard, SafetyCard
+from src.defs.game import Condition
 
 
 class Accident(HazardCard):
