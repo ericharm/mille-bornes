@@ -105,5 +105,10 @@ class Tableau:
 
     @property
     def can_go(self) -> bool:
-        # TODO: this is oversimplified, I'm not sure how safety cards factor in
-        return bool(self.top_battle_card and self.top_battle_card.name == CardName.go)
+        if self.top_battle_card and self.top_battle_card.name == CardName.go:
+            return True
+
+        if CardName.right_of_way in {card.name for card in self.safety_cards}:
+            return True
+
+        return False

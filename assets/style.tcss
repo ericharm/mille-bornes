@@ -4,9 +4,9 @@ GameContainer {
 
 GameInfo {
     background: #1a1b26;
-    color: #9ece6a; /* Green for success */
+    color: #e0af68;
     padding: 1;
-    border: wide #bb9af7; /* Secondary highlight Purple */
+    border: wide #7dcfff;
     height: 5;
 }
 
