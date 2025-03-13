@@ -11,6 +11,7 @@ from src.defs.constants import HAND_SIZE
 from src.defs.game import Condition
 from src.defs.player import Play, PlayerBase, PlayerType
 from src.domain.tableau import add_card_to_tableau
+from src.models.event_log import EventLog
 from src.models.tableau import Tableau
 
 
@@ -27,6 +28,7 @@ class Player(PlayerBase, ABC):
     def play_card(self, card: Card, target: Optional[PlayerBase] = None) -> None:
         self.hand.remove(card)
         add_card_to_tableau(self.tableau if not target else target.tableau, card)
+        EventLog.append_message(f"{self.name} played {card.name.value}")
 
     def discard_card(self, discard_pile: list) -> None:
         if len(self.hand) > HAND_SIZE:
