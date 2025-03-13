@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from enum import Enum
 from typing import NoReturn, Optional, Union, cast
 
@@ -18,6 +16,7 @@ class Card:
     name: CardName
     card_type: CardType
     value: Union[int, set[Condition]]
+    symbol: str = "?"
     description: Optional[str] = None
 
 
@@ -29,6 +28,11 @@ class ConditionCard(Card):
 
     @property
     def condition(self) -> Condition:
+        # Most condition cards have exactly one condition
+        # The only exception is Right of Way; this property
+        # will raise an exception if the card is any Safety Card,
+        # to make sure we don't try to iterate about the conditions
+        # of a list of Safety Cards
         return cast(Condition, list(self.value)[0])
 
 

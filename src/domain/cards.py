@@ -1,3 +1,4 @@
+import random
 from typing import Optional, cast
 
 from src.defs.card_names import CardName
@@ -13,6 +14,7 @@ def create_deck() -> list[Card]:
         for _ in range(count):
             cards.append(card_type())
 
+    random.shuffle(cards)
     return cards
 
 

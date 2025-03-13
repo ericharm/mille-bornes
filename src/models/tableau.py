@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import Optional, cast
 
 from src.defs.card_names import CardName
-from src.defs.card_types import Card, CardType, HazardCard, SafetyCard
+from src.defs.card_types import Card, CardType, DistanceCard, HazardCard, SafetyCard
 from src.defs.constants import SPEED_LIMIT
 from src.defs.game import Condition
 from src.domain.cards import get_top_card
@@ -10,10 +10,10 @@ from src.domain.cards import get_top_card
 
 @dataclass
 class Tableau:
-    battle_cards: list[Card] = field(default_factory=lambda: [])
-    speed_cards: list[Card] = field(default_factory=lambda: [])
-    distance_cards: list[Card] = field(default_factory=lambda: [])
-    safety_cards: list[Card] = field(default_factory=lambda: [])
+    battle_cards: list[Card] = field(default_factory=list)
+    speed_cards: list[Card] = field(default_factory=list)
+    distance_cards: list[Card] = field(default_factory=list)
+    safety_cards: list[Card] = field(default_factory=list)
 
     @property
     def top_battle_card(self) -> Optional[Card]:
@@ -32,19 +32,25 @@ class Tableau:
             return SPEED_LIMIT
         return None
 
-    # @property
-    # def total_distance(self) -> int:
-    #     return sum([cast(DistanceCard, card).value for card in self.distance_cards])
+    @property
+    def total_distance(self) -> int:
+        return sum([cast(DistanceCard, card).value for card in self.distance_cards])
 
     @property
     def immunities(self) -> list[Condition]:
         immunities = []
         for safety_card in self.safety_cards:
-            immunities.extend([condition for condition in cast(SafetyCard, safety_card).value])
+            immunities.extend([
+                condition for condition in cast(SafetyCard, safety_card).value
+            ])
 
         # You're immune to all hazards except speed limits if your battle pile is empty:
         if not self.top_battle_card:
-            immunities.extend([Condition.flat_tire, Condition.out_of_gas, Condition.stop])
+            immunities.extend([
+                Condition.flat_tire,
+                Condition.out_of_gas,
+                Condition.stop,
+            ])
 
         # You're immune to speed limits if you already have one:
         if self.speed_limit:
@@ -99,5 +105,5 @@ class Tableau:
 
     @property
     def can_go(self) -> bool:
-        # this is oversimplified, I'm not sure how safety cards factor in
+        # TODO: this is oversimplified, I'm not sure how safety cards factor in
         return bool(self.top_battle_card and self.top_battle_card.name == CardName.go)

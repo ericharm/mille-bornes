@@ -1,0 +1,43 @@
+#everything {
+  padding: 1;
+}
+
+#game_info {
+    background: #1a1b26;
+    color: #9ece6a; /* Green for success */
+    padding: 1;
+    border: wide #bb9af7; /* Secondary highlight Purple */
+    height: 3;
+    margin-bottom: 1;
+}
+
+#turn_counter {
+    color: #9ece6a; /* Green for success */
+}
+
+#tableau {
+    background: #1a1b26;
+    color: #9ece6a; /* Green for success */
+    padding: 1;
+    margin-bottom: 1;
+    border: wide #bb9af7; /* Secondary highlight Purple */
+}
+
+#hand {
+    background: #1a1b26;
+    color: #e0af68; /* Soft Gold for emphasis */
+    /* padding: 1; */
+    border: heavy #7dcfff; /* Cyan for cool contrast */
+}
+
+#log {
+    background: #1a1b26;
+    color: #7aa2f7; /* Blue for readability */
+    /* padding: 1; */
+    border: thick #f7768e; /* Red for event logging */
+}
+
+Header, Footer {
+    background: #1a1b26;
+    color: #c0caf5;
+}

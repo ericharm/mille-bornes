@@ -9,9 +9,9 @@ from src.models.player import Player
 class Game:
     players: list[Player]
     draw_pile: list[Card]
-    discard_pile: list[Card] = field(default_factory=lambda: [])
+    discard_pile: list[Card] = field(default_factory=list)
     current_player_index: int = 0
-    turn = 0
+    turn: int = 0
 
     @property
     def player_count(self) -> int:

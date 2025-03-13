@@ -30,11 +30,6 @@ def _add_remedy_to_tableau(tableau: Tableau, remedy_card: RemedyCard) -> None:
         tableau.speed_cards.append(remedy_card)
         return
 
-    # I actually think this condition is not impossible:
-    # top_battle_card = tableau.top_battle_card
-    # if not remedy_card_cures_hazard_card(remedy_card, cast(HazardCard, top_battle_card)):
-    #     raise Exception("This remedy does not reconcile this hazard")
-
     tableau.battle_cards.append(remedy_card)
 
 

@@ -7,8 +7,3 @@ class Condition(Enum):
     flat_tire = "flat_tire"
     stop = "stop"
     speed_limit = "speed_limit"
-
-
-class PlayerType(Enum):
-    human = "human"
-    computer = "computer"
