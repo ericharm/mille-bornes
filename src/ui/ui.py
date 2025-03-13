@@ -49,7 +49,7 @@ class MilleBornesUI(App):
     """
 
     CSS_PATH = STYLESHEET_PATH
-    TITLE = "Milles-Borne"
+    TITLE = "Mille Borne"
 
     def __init__(self, game: Game):
         super().__init__()
