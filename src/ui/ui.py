@@ -1,46 +1,16 @@
-from typing import Any
+from typing import Optional
+from textual import on
+from textual.containers import Vertical
 from textual.reactive import reactive
 from textual.app import App, ComposeResult
-from textual.containers import (
-    Horizontal,
-    Vertical,
-    VerticalScroll,
-)
-from textual.widgets import Header, Static
+from textual.widgets import Header
 
 from src.defs.ui import STYLESHEET_PATH
 from src.models.game import Game
-from src.models.event_log import EventLog
-from src.ui.player_container import PlayerContainer
-
-
-class EventLogContainer(Horizontal):
-    def compose(self) -> ComposeResult:
-        yield VerticalScroll(*[Static(message) for message in EventLog.messages])
-
-
-class GameInfo(Horizontal):
-    def __init__(self, game, **kwargs) -> None:
-        super().__init__(**kwargs)
-        self.game = game
-
-    def compose(self) -> ComposeResult:
-        yield Static(
-            f"🂠 Turn {self.game.turn} | Cards Left: {len(self.game.draw_pile)} "
-        )
-
-
-class GameContainer(Vertical):
-    def __init__(self, game: Game, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.game = game
-
-    def compose(self) -> ComposeResult:
-        yield Vertical(
-            GameInfo(self.game),
-            *[PlayerContainer(player) for player in self.game.players],
-            EventLogContainer(),
-        )
+from src.ui.card_description_container import CardDescriptionContainer
+from src.ui.event_log_container import EventLogContainer
+from src.ui.game_container import GameContainer
+from src.ui.hand_container import CardButton
 
 
 class MilleBornesUI(App):
@@ -57,6 +27,14 @@ class MilleBornesUI(App):
         self.turn = reactive(game.turn)
         self.card_count = reactive(len(game.draw_pile))
 
+    @on(CardButton.CardSelected)
+    def on_card_button_card_selected(self, event: CardButton.CardSelected) -> None:
+        self.query_one(CardDescriptionContainer).set_selected_card(event.card)
+
     def compose(self) -> ComposeResult:
         yield Header()
         yield GameContainer(self.game)
+        yield Vertical(
+            CardDescriptionContainer(),
+            EventLogContainer(id="right"),
+        )

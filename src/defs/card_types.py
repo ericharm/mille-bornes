@@ -17,14 +17,14 @@ class Card:
     card_type: CardType
     value: Union[int, set[Condition]]
     symbol: str = "?"
-    description: Optional[str] = None
+    description: str = ""
 
 
 class ConditionCard(Card):
     name: CardName
     card_type: CardType
     value: set[Condition]
-    description: Optional[str] = None
+    description: str = ""
 
     @property
     def condition(self) -> Condition:
@@ -40,25 +40,25 @@ class DistanceCard(Card):
     name: CardName
     card_type: CardType = CardType.distance
     value: int = 0
-    description: Optional[str] = None
+    description: str = ""
 
 
 class HazardCard(ConditionCard):
     name: CardName
     card_type: CardType = CardType.hazard
-    description: Optional[str] = None
+    description: str = ""
 
 
 class RemedyCard(ConditionCard):
     name: CardName
     card_type: CardType = CardType.remedy
-    description: Optional[str] = None
+    description: str = ""
 
 
 class SafetyCard(ConditionCard):
     name: CardName
     card_type: CardType = CardType.safety
-    description: Optional[str] = None
+    description: str = ""
 
     @property
     def condition(self) -> NoReturn:

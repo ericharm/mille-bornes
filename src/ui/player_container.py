@@ -9,23 +9,13 @@ from textual.widgets import Static
 from src.models.player import Player
 
 
-class Hand(Vertical):
-    def __init__(self, player: Player, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        self.player = player
-
-    def compose(self) -> ComposeResult:
-        hand = "Hand: " + " | ".join(card.symbol for card in self.player.hand)
-        yield Static(hand)
-
-
 class TableauContainer(Horizontal):
     def __init__(self, player: Player, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.player = player
 
     def compose(self) -> ComposeResult:
-        conditions = f"Active: {' '.join(cond.value for cond in self.player.tableau.active_conditions)}"
+        conditions = f"Conditions: {' '.join(cond.value for cond in self.player.tableau.active_conditions)}"
         distance = sum(
             cast(int, card.value) for card in self.player.tableau.distance_cards
         )
@@ -56,10 +46,8 @@ class TableauContainer(Horizontal):
             ),
         )
 
-        yield Hand(self.player)
 
-
-class PlayerContainer(Vertical):
+class PlayerContainer(Horizontal):
     def __init__(self, player: Player, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.player = player

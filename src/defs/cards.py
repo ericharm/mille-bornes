@@ -69,7 +69,7 @@ class SpareTire(RemedyCard):
     value: set[Condition] = {Condition.flat_tire}
     symbol = "t"
     description: str = (
-        "This card can be used to remove a Flat flat_tire from your battle area."
+        "This card can be used to remove a Flat Tire from your battle area."
     )
 
 
@@ -85,7 +85,7 @@ class EndOfLimit(RemedyCard):
     value: set[Condition] = {Condition.speed_limit}
     symbol = "s"
     description: str = (
-        "This card can be used to remove speed_limit Limit from your battle area."
+        "This card can be used to remove Speed Limit from your battle area."
     )
 
 
