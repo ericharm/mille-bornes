@@ -21,6 +21,9 @@ class ComputerPlayer(Player):
         if safety_card:
             return Play(safety_card, self)
 
+        # TODO: make sure the player actually does take another turn after playing
+        # a safety card
+
         # Remedy any hazards at the top of your battle pile
         battle_hazard = self.battle_hazard
         if battle_hazard:
@@ -35,7 +38,9 @@ class ComputerPlayer(Player):
 
         # Try to play a distance card
         if self.can_go:
-            longest_distance_card = find_longest_distance_card_in_hand(self.hand, self.speed_limit)
+            longest_distance_card = find_longest_distance_card_in_hand(
+                self.hand, self.speed_limit
+            )
             if longest_distance_card:
                 return Play(longest_distance_card, self)
 

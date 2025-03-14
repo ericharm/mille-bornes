@@ -13,5 +13,5 @@ if __name__ == "__main__":
     deck = cards_domain.create_deck()
     game = Game(players=[player_1, player_2], draw_pile=deck)
     game_domain.deal_cards(game)
-    game_domain.play_game_turn(game)
+    # game_domain.play_game_turn(game)
     MilleBornesUI(game).run()

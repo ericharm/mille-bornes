@@ -25,7 +25,9 @@ class FlatTire(HazardCard):
     name: CardName = CardName.flat_tire
     value: set[Condition] = {Condition.flat_tire}
     symbol: str = "T"
-    description: str = "When Flat flat_tire is played, the player must replace the tire before continuing."
+    description: str = (
+        "When Flat Tire is played, the player must replace the tire before continuing."
+    )
 
 
 class Stop(HazardCard):
@@ -42,7 +44,7 @@ class SpeedLimit(HazardCard):
     value: set[Condition] = {Condition.speed_limit}
     symbol = "S"
     description: str = (
-        "The player cannot play a distance card that exceeds the speed_limit limit."
+        "The player cannot play a distance card that exceeds the Speed Limit."
     )
 
 
@@ -77,7 +79,7 @@ class Go(RemedyCard):
     name: CardName = CardName.go
     value: set[Condition] = {Condition.stop}
     symbol = "🟢"
-    description: str = "This card can be used to remove a Stop from your battle area."
+    description: str = "Play this card to permit playing distance cards."
 
 
 class EndOfLimit(RemedyCard):
@@ -142,11 +144,11 @@ class PunctureProof(SafetyCard):
     name: CardName = CardName.puncture_proof
     value: set[Condition] = {Condition.flat_tire}
     symbol: str = "🔧"
-    description: str = "This card protects the player from Flat flat_tire."
+    description: str = "This card protects the player from Flat Tire."
 
 
 class RightOfWay(SafetyCard):
     name: CardName = CardName.right_of_way
     value: set[Condition] = {Condition.stop, Condition.speed_limit}
     symbol: str = "🚦"
-    description: str = "This card protects the player from Stop and speed_limit Limit."
+    description: str = "This card protects the player from Stop and Speed Limit."

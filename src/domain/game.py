@@ -1,4 +1,5 @@
 from src.defs.constants import HAND_SIZE, TOTAL_CARD_COUNT
+from src.models.event_log import EventLog
 from src.models.game import Game
 
 
@@ -22,6 +23,12 @@ def play_game_turn(game: Game) -> Game:
 
     if play:
         game.current_player.play_card(play.card, play.target)
+        EventLog.append_message(
+            f"{game.current_player.name} played {play.card.name.value}"
+        )
+
+    else:
+        EventLog.append_message(f"{game.current_player.name} passed")
 
     game.current_player.discard_card(game.discard_pile)
     game.current_player_index = game.next_player_index

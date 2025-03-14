@@ -68,7 +68,7 @@ class Tableau:
         conditions = []
         top_battle_card = self.top_battle_card
 
-        if not top_battle_card or top_battle_card.name != CardName.go:
+        if not self.can_go:
             conditions.append(Condition.stop)
 
         if top_battle_card and top_battle_card.card_type == CardType.hazard:

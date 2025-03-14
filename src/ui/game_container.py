@@ -4,11 +4,20 @@ from textual.containers import (
     Horizontal,
     Vertical,
 )
-from textual.widgets import Static
+from textual.widgets import Button, Static
 
 from src.models.game import Game
 from src.ui.hand_container import HandContainer
 from src.ui.player_container import PlayerContainer
+
+
+class NextButton(Button):
+    pass
+
+
+class NextPlayContainer(Vertical):
+    def compose(self) -> ComposeResult:
+        yield NextButton(variant="success")
 
 
 class GameInfo(Horizontal):
@@ -31,4 +40,5 @@ class GameContainer(Vertical):
         yield GameInfo(self.game)
         for player in self.game.players:
             yield PlayerContainer(player)
-        yield HandContainer(self.game.players[0])
+        yield HandContainer(self.game.current_player)
+        yield NextPlayContainer()
