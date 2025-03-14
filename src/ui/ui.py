@@ -20,12 +20,12 @@ class MilleBornesUI(App):
         super().__init__()
         self.game = game
 
-    @on(CardButton.CardSelected)
     def on_card_button_card_selected(self, event: CardButton.CardSelected) -> None:
         self.query_one(CardDescriptionContainer).set_selected_card(event.card)
 
-    @on(NextButton.Pressed)
-    async def on_next_button_pressed(self, _: NextButton.Pressed) -> None:
+    @on(NextButton.NextPressed)
+    async def on_next_button_pressed(self, event: NextButton.NextPressed) -> None:
+        event.prevent_default()
         play_game_turn(self.game)
         await self.query_one(GameContainer).recompose()
         await self.query_one(EventLogContainer).recompose()

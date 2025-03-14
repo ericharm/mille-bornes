@@ -4,6 +4,7 @@ from textual.containers import (
     Horizontal,
     Vertical,
 )
+from textual.message import Message
 from textual.widgets import Button, Static
 
 from src.models.game import Game
@@ -12,7 +13,12 @@ from src.ui.player_container import PlayerContainer
 
 
 class NextButton(Button):
-    pass
+    class NextPressed(Message):
+        def __init__(self) -> None:
+            super().__init__()
+
+    def on_click(self) -> None:
+        self.post_message(self.NextPressed())
 
 
 class NextPlayContainer(Vertical):
