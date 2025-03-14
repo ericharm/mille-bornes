@@ -23,9 +23,7 @@ def play_game_turn(game: Game) -> Game:
 
     if play:
         game.current_player.play_card(play.card, play.target)
-        EventLog.append_message(
-            f"{game.current_player.name} played {play.card.name.value}"
-        )
+        EventLog.append_message(f"{game.current_player.name} played {play.card.name.value}")
 
     else:
         EventLog.append_message(f"{game.current_player.name} passed")

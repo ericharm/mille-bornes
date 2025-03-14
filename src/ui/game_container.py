@@ -1,9 +1,7 @@
 from typing import Any
+
 from textual.app import ComposeResult
-from textual.containers import (
-    Horizontal,
-    Vertical,
-)
+from textual.containers import Horizontal, Vertical
 from textual.message import Message
 from textual.widgets import Button, Static
 
@@ -27,14 +25,12 @@ class NextPlayContainer(Vertical):
 
 
 class GameInfo(Horizontal):
-    def __init__(self, game, **kwargs) -> None:
+    def __init__(self, game: Game, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.game = game
 
     def compose(self) -> ComposeResult:
-        yield Static(
-            f"🂠 Turn {self.game.turn} | Cards Left: {len(self.game.draw_pile)} "
-        )
+        yield Static(f"🂠 Turn {self.game.turn} | Cards Left: {len(self.game.draw_pile)} ")
 
 
 class GameContainer(Vertical):

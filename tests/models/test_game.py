@@ -1,5 +1,5 @@
-from src.models.computer_player import ComputerPlayer
 from src.domain import cards as cards_domain
+from src.models.computer_player import ComputerPlayer
 from src.models.game import Game
 
 

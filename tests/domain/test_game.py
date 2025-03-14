@@ -1,7 +1,8 @@
 import pytest
+
+from src.defs import cards
 from src.defs.card_names import CardName
 from src.defs.constants import HAND_SIZE, TOTAL_CARD_COUNT
-from src.defs import cards
 from src.domain.cards import create_deck, find_longest_distance_card_in_hand
 from src.domain.game import deal_cards, play_game_turn
 from src.models.computer_player import ComputerPlayer

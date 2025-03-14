@@ -1,5 +1,5 @@
 class EventLog:
-    messages = []
+    messages: list[str] = []
 
     @staticmethod
     def append_message(message: str) -> None:

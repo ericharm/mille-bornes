@@ -1,9 +1,7 @@
 from typing import Any
+
 from textual.app import ComposeResult
-from textual.containers import (
-    Horizontal,
-    Vertical,
-)
+from textual.containers import Horizontal, Vertical
 from textual.message import Message
 from textual.widgets import Button, Static
 
@@ -14,10 +12,8 @@ from src.models.player import Player
 class CardButton(Button):
     """A button representing a Mille Bornes card."""
 
-    def __init__(self, card: Card, **kwargs) -> None:
-        super().__init__(
-            card.symbol, **kwargs
-        )  # Display the card's symbol as the button text
+    def __init__(self, card: Card, **kwargs: Any) -> None:
+        super().__init__(card.symbol, **kwargs)  # Display the card's symbol as the button text
         self.card = card
 
     class CardSelected(Message):

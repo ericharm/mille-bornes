@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import NoReturn, Optional, Union, cast
+from typing import NoReturn, Union, cast
 
 from src.defs.card_names import CardName
 from src.defs.game import Condition

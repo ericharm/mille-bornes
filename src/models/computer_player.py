@@ -38,9 +38,7 @@ class ComputerPlayer(Player):
 
         # Try to play a distance card
         if self.can_go:
-            longest_distance_card = find_longest_distance_card_in_hand(
-                self.hand, self.speed_limit
-            )
+            longest_distance_card = find_longest_distance_card_in_hand(self.hand, self.speed_limit)
             if longest_distance_card:
                 return Play(longest_distance_card, self)
 

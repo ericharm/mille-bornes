@@ -40,17 +40,17 @@ class Tableau:
     def immunities(self) -> list[Condition]:
         immunities = []
         for safety_card in self.safety_cards:
-            immunities.extend([
-                condition for condition in cast(SafetyCard, safety_card).value
-            ])
+            immunities.extend([condition for condition in cast(SafetyCard, safety_card).value])
 
         # You're immune to all hazards except speed limits if your battle pile is empty:
         if not self.top_battle_card:
-            immunities.extend([
-                Condition.flat_tire,
-                Condition.out_of_gas,
-                Condition.stop,
-            ])
+            immunities.extend(
+                [
+                    Condition.flat_tire,
+                    Condition.out_of_gas,
+                    Condition.stop,
+                ]
+            )
 
         # You're immune to speed limits if you already have one:
         if self.speed_limit:

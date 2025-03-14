@@ -1,4 +1,5 @@
-from typing import Optional
+from typing import Optional, Union
+
 from textual.reactive import reactive
 from textual.widgets import Static
 
@@ -6,7 +7,7 @@ from src.defs.card_types import Card
 
 
 class CardDescriptionContainer(Static):
-    selected_card = reactive(None)
+    selected_card: Union[reactive, Optional[Card]] = reactive(None)
 
     def set_selected_card(self, card: Optional[Card]) -> None:
         self.selected_card = card

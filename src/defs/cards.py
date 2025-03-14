@@ -16,9 +16,7 @@ class OutOfGas(HazardCard):
     name: CardName = CardName.out_of_gas
     value: set[Condition] = {Condition.out_of_gas}
     symbol: str = "G"
-    description: str = (
-        "When Out of Gas is played, the player must get gas before continuing."
-    )
+    description: str = "When Out of Gas is played, the player must get gas before continuing."
 
 
 class FlatTire(HazardCard):
@@ -43,36 +41,28 @@ class SpeedLimit(HazardCard):
     name: CardName = CardName.speed_limit
     value: set[Condition] = {Condition.speed_limit}
     symbol = "S"
-    description: str = (
-        "The player cannot play a distance card that exceeds the Speed Limit."
-    )
+    description: str = "The player cannot play a distance card that exceeds the Speed Limit."
 
 
 class Repairs(RemedyCard):
     name: CardName = CardName.repairs
     value: set[Condition] = {Condition.accident}
     symbol = "x"
-    description: str = (
-        "This card can be used to remove an Accident from your battle area."
-    )
+    description: str = "This card can be used to remove an Accident from your battle area."
 
 
 class Gasoline(RemedyCard):
     name: CardName = CardName.gasoline
     value: set[Condition] = {Condition.out_of_gas}
     symbol = "g"
-    description: str = (
-        "This card can be used to remove an Out of Gas from your battle area."
-    )
+    description: str = "This card can be used to remove an Out of Gas from your battle area."
 
 
 class SpareTire(RemedyCard):
     name: CardName = CardName.spare_tire
     value: set[Condition] = {Condition.flat_tire}
     symbol = "t"
-    description: str = (
-        "This card can be used to remove a Flat Tire from your battle area."
-    )
+    description: str = "This card can be used to remove a Flat Tire from your battle area."
 
 
 class Go(RemedyCard):
@@ -86,9 +76,7 @@ class EndOfLimit(RemedyCard):
     name: CardName = CardName.end_of_limit
     value: set[Condition] = {Condition.speed_limit}
     symbol = "s"
-    description: str = (
-        "This card can be used to remove Speed Limit from your battle area."
-    )
+    description: str = "This card can be used to remove Speed Limit from your battle area."
 
 
 class Distance25(DistanceCard):

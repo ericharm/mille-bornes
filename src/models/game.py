@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
-from typing import cast
+from typing import Optional, cast
 
 from src.defs.card_types import Card
+from src.defs.constants import TARGET_DISTANCE
 from src.models.player import Player
 
 
@@ -31,3 +32,10 @@ class Game:
     @property
     def next_player(self) -> Player:
         return cast(Player, self.players[self.next_player_index])
+
+    @property
+    def victor(self) -> Optional[Player]:
+        return next(
+            (player for player in self.players if player.distance_traveled >= TARGET_DISTANCE),
+            None,
+        )

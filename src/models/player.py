@@ -63,6 +63,10 @@ class Player(PlayerBase, ABC):
         hazard, *_ = [condition for condition in hazard_card.value]
         return hazard
 
+    @property
+    def distance_traveled(self) -> int:
+        return sum(cast(int, card.value) for card in self.tableau.distance_cards)
+
     @cached_property
     def id(self) -> str:
         return str(uuid.uuid4())

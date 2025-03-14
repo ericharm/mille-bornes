@@ -1,6 +1,6 @@
 from textual import on
-from textual.containers import Vertical
 from textual.app import App, ComposeResult
+from textual.containers import Vertical
 from textual.widgets import Header
 
 from src.defs.ui import STYLESHEET_PATH

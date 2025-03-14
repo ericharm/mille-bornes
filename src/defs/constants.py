@@ -2,6 +2,8 @@ from typing import Type
 
 from src.defs import cards
 
+TARGET_DISTANCE = 700
+
 SPEED_LIMIT = 50
 
 HAND_SIZE = 6
